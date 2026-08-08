@@ -1,37 +1,37 @@
-# Soulshot Quest
+# SoulShot Quest
 
-Soulshot Quest is a static HTML5 browser game by Pixivic. This package is ready to host with GitHub Pages.
+A small browser fangame inspired by **Soul Knight**, made by Pixivic.
 
-## Play locally
+Destroy all the Soul Eggs before they reach the end of the path. Match shots with the same colors to clear them and survive the level.
 
-Open `index.html` in a browser. For the most consistent browser behavior, you can also serve the folder with any simple local HTTP server.
+## Play
+
+**Play SoulShot Quest here:**  
+https://pixivic.github.io/SoulShot-Quest/
+
+The game runs directly in your browser. No download is required.
 
 ## Controls
 
-- Desktop: move the mouse to aim and click to shoot.
-- Mobile: rotate the phone to landscape, then tap where you want to aim and shoot.
-- Pause: use the pause button or press `P` on desktop.
+### PC
+- Move the mouse to aim
+- Left Click to shoot
+- `P` to pause
+- `Esc` to pause or go back
 
-## Publish with GitHub Pages
+### Mobile
+- Play in landscape mode
+- Tap where you want to aim and shoot
 
-1. Create a GitHub repository for the game.
-2. Upload the **contents of this folder** to the root of the repository. `index.html` must remain at the repository root.
-3. Commit the files to the `main` branch.
-4. Open **Settings > Pages** in the repository.
-5. Under **Build and deployment**, choose **Deploy from a branch**.
-6. Select the `main` branch and `/(root)` folder, then save.
-7. After GitHub Pages finishes deploying, open the Pages URL shown by GitHub.
+## Game Modes
 
-All game assets use relative paths, so the game works correctly from a project Pages URL such as `https://USERNAME.github.io/REPOSITORY/`.
-
-## Main files
-
-- `index.html` — GitHub Pages entry point
-- `style.css` — game interface and responsive styling
-- `game.js` — game logic
-- `assets/` — sprites, UI graphics, fonts, music, and sound effects
-- `.nojekyll` — tells GitHub Pages to serve the static files directly
+- **Level Mode** — Very Easy, Easy, Normal, and Hard
+- **Infinite Mode** — Keep playing and aim for a higher score
 
 ## Credits
 
-Soulshot Quest is a non-commercial Soul Knight fangame made by Pixivic for fun. See the in-game Credits screen for music and project credits.
+Made by **Pixivic**.
+
+SoulShot Quest is an unofficial, non-commercial fangame inspired by **Soul Knight by ChillyRoom** and was made purely for fun.
+
+Music credits are available in the in-game Credits menu.
