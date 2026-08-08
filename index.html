@@ -10,6 +10,27 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <div id="loadingScreen" class="loading-screen" role="status" aria-live="polite">
+    <div class="loading-card">
+      <p class="menu-kicker loading-kicker">SOUL KNIGHT FANGAME BY PIXIVIC</p>
+      <h1 class="game-title loading-title"><span class="title-red">S</span><span class="title-white">oul</span><span class="title-red">S</span><span class="title-white">hot</span> <span class="title-yellow">Quest</span></h1>
+      <p id="loadingStatus" class="loading-status">Downloading resources... 0%</p>
+      <div class="loading-progress-track" aria-hidden="true">
+        <div id="loadingProgressBar" class="loading-progress-bar"></div>
+      </div>
+      <p id="loadingHint" class="loading-hint">Preparing game files...</p>
+      <button id="loadingRetryBtn" class="secondary-btn hidden" type="button">Retry</button>
+    </div>
+  </div>
+
+  <div id="orientationLock" class="orientation-lock" role="status" aria-live="polite" aria-hidden="true">
+    <div class="orientation-card">
+      <div class="rotate-icon" aria-hidden="true">↻</div>
+      <h1>Rotate Your Phone</h1>
+      <p>Switch to landscape mode to continue playing.</p>
+    </div>
+  </div>
+
   <div id="gameShell">
     <div id="worldLayer">
       <img id="animatedBackground" src="assets/sprites/background.png" alt="" />
@@ -19,13 +40,23 @@
       <canvas id="gameCanvas" width="1280" height="720"></canvas>
       <canvas id="shooterCanvas" width="1280" height="720"></canvas>
       <div id="explosionLayer"></div>
+      <div id="skillLayer">
+        <img id="skillSlotElectric" class="skill-slot-img hidden" alt="" />
+        <img id="skillSlotFire" class="skill-slot-img hidden" alt="" />
+        <img id="skillSlotIce" class="skill-slot-img hidden" alt="" />
+        <div id="skillCancelTip" class="skill-cancel-tip hidden">Click here to Cancel</div>
+        <div id="skillTooltip" class="skill-tooltip hidden">
+          <div id="skillTooltipName"></div>
+          <div id="skillTooltipDesc"></div>
+        </div>
+      </div>
     </div>
 
     <div id="startScreen" class="start-screen">
       <div class="start-screen-content">
         <p class="menu-kicker start-kicker">SOUL KNIGHT FANGAME BY PIXIVIC</p>
         <h1 class="game-title start-title"><span class="title-red">S</span><span class="title-white">oul</span><span class="title-red">S</span><span class="title-white">hot</span> <span class="title-yellow">Quest</span></h1>
-        <p class="start-continue">Tap or click anywhere to continue</p>
+        <p class="start-continue">Tap or click anywhere to Continue</p>
       </div>
     </div>
 
@@ -57,7 +88,7 @@
           <button id="levelModeBtn" type="button">Level Mode</button>
           <button id="infiniteModeBtn" type="button">Infinite Mode</button>
         </div>
-        <button id="creditsOpenBtn" class="credits-link" type="button">Credits</button>
+        <div class="settings-button-row"><button id="settingsOpenBtn" class="menu-settings-btn" type="button">Settings</button></div>
       </div>
     </div>
 
@@ -67,12 +98,46 @@
         <p class="menu-kicker">LEVEL MODE</p>
         <h2>Select Level</h2>
         <div class="level-buttons">
-          <button class="levelBtn" type="button" data-level="0">Very Easy</button>
-          <button class="levelBtn" type="button" data-level="1">Easy</button>
-          <button class="levelBtn" type="button" data-level="2">Normal</button>
-          <button class="levelBtn" type="button" data-level="3">Hard</button>
+          <button class="levelBtn" type="button" data-level="0">Normal</button>
+          <button class="levelBtn" type="button" data-level="1">Hard</button>
+          <button class="levelBtn" type="button" data-level="2">Insane</button>
+          <button class="levelBtn" type="button" data-level="3">Impossible</button>
         </div>
         <button id="backToMenuBtn" class="secondary-btn" type="button">Back</button>
+      </div>
+    </div>
+
+
+    <div id="settingsPanel" class="menu-panel hidden">
+      <div class="menu-box settings-box">
+        <h2>Settings</h2>
+
+        <div class="volume-area">
+          <div class="volume-row" data-volume="music">
+            <div class="volume-labels">
+              <span>Music</span>
+              <span id="musicVolumeText">100</span>
+            </div>
+            <div class="volume-slider" id="musicVolumeSlider">
+              <div class="volume-fill" id="musicVolumeFill"></div>
+              <button class="volume-knob" id="musicVolumeKnob" type="button" aria-label="Music volume"></button>
+            </div>
+          </div>
+
+          <div class="volume-row" data-volume="sfx">
+            <div class="volume-labels">
+              <span>Sounds</span>
+              <span id="sfxVolumeText">100</span>
+            </div>
+            <div class="volume-slider" id="sfxVolumeSlider">
+              <div class="volume-fill" id="sfxVolumeFill"></div>
+              <button class="volume-knob" id="sfxVolumeKnob" type="button" aria-label="Sound effects volume"></button>
+            </div>
+          </div>
+        </div>
+
+        <button id="creditsOpenBtn" class="credits-link settings-credit-link" type="button">Credits</button>
+        <button id="settingsReturnBtn" class="secondary-btn settings-return-btn" type="button">Return</button>
       </div>
     </div>
 
@@ -101,22 +166,14 @@
 
     <div id="messagePanel" class="hidden">
       <h1 id="messageTitle">Paused</h1>
-      <p id="messageText">Tap Resume to continue.</p>
+      <p id="messageText">Tap or click Resume to continue.</p>
       <div class="message-buttons">
         <button id="resumeBtn" type="button">Resume</button>
         <button id="retryBtn" type="button">Retry</button>
+        <button id="settingsPauseBtn" type="button">Settings</button>
         <button id="nextLevelBtn" type="button">Next Level</button>
         <button id="menuBtn" type="button">Main Menu</button>
       </div>
-    </div>
-  </div>
-
-
-  <div id="orientationLock" role="status" aria-live="polite">
-    <div class="orientation-card">
-      <div class="rotate-icon" aria-hidden="true">↻</div>
-      <h1>Rotate Your Phone</h1>
-      <p>Soulshot Quest can only be played in landscape mode.</p>
     </div>
   </div>
 
