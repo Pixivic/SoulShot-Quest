@@ -492,20 +492,7 @@ button:active { transform: translateY(1px); }
 
 .hidden { display: none !important; }
 
-@media (max-width: 0px) {
-  #hud { top: 8px; left: 8px; right: 8px; gap: 8px; }
-  .score-card { width: 155px; height: 42px; padding-top: 14px; font-size: 9px; }
-  .progress-card { width: 365px; height: 35px; }
-  .progress-top { left: 14px; right: 14px; top: 8px; font-size: 6px; }
-  #progressFill { background-size: 365px 35px; }
-  #pauseBtn { width: 37px; height: 40px; }
-  .menu-box { padding: 48px 44px 44px; }
-  .menu-box h1 { font-size: clamp(36px, 9vw, 58px); }
-  .menu-desc { font-size: 8px; margin-top: 18px; }
-  .menu-buttons button, .level-buttons button, .secondary-btn,
-  #resumeBtn, #retryBtn, #nextLevelBtn, #menuBtn { width: 174px; height: 81px; padding-bottom: 18px; font-size: 8px; }
-  #messagePanel { padding: 46px 44px 40px; }
-}
+
 
 
 .score-card {
@@ -608,24 +595,8 @@ button:active { transform: translateY(1px); }
   height: 100px;
   margin: 0;
 }
-#menuBtn {
-  grid-column: 1 / -1;
-  justify-self: center;
-  margin-top: 0;
-}
 
-@media (max-width: 0px) {
-  .score-card { width: 185px; height: 50px; }
-  .score-label { left: 22px; top: 8px; font-size: 9px; }
-  #scoreText { left: 68px; top: 27px; font-size: 11px; }
-  .progress-card { width: 420px; height: 40px; }
-  #progressFill { background-size: 420px 40px; }
-  .progress-top { left: 18px; right: 18px; font-size: 7px; }
-  .progress-label { top: 7px; }
-  #ballsLeftText { top: 23px; font-size: 8px; min-width: 74px; }
-  #pauseBtn { width: 48px; height: 52px; }
-  .message-buttons { grid-template-columns: 174px 174px; grid-auto-rows: 81px; column-gap: 22px; row-gap: 8px; }
-}
+
 
 .menu-buttons button, .level-buttons button, .secondary-btn,
 #resumeBtn, #retryBtn, #nextLevelBtn, #menuBtn {
@@ -715,20 +686,7 @@ button:active { transform: translateY(1px); }
   text-shadow: 2px 2px 0 #120700, -2px 0 0 #120700, 2px 0 0 #120700, 0 -2px 0 #120700, 0 2px 0 #120700, 0 0 10px rgba(0,0,0,1), 0 0 5px rgba(0,0,0,1);
 }
 
-@media (max-width: 0px) {
-  .menu-buttons button, .level-buttons button, .secondary-btn,
-  #resumeBtn, #retryBtn, #nextLevelBtn, #menuBtn {
-    font-size: 10px;
-    padding: 10px 18px 14px;
-  }
-  .menu-buttons button, .level-buttons button,
-  #messagePanel .message-buttons button { width: 184px; height: 86px; }
-  .message-buttons { grid-template-columns: 184px 184px; grid-auto-rows: 86px; column-gap: 20px; }
-  .score-label { font-size: 10px; left: 22px; top: 7px; }
-  #scoreText { font-size: 11px; left: 22px; top: 27px; }
-  .progress-top { font-size: 8px; }
-  #ballsLeftText { font-size: 9px; top: 24px; right: 15px; }
-}
+
 
 .menu-box,
 #messagePanel {
@@ -822,11 +780,7 @@ button:active { transform: translateY(1px); }
   text-shadow: 3px 3px 0 #001018, 0 0 12px rgba(180,255,255,0.65);
 }
 
-@media (max-width: 0px) {
-  .credits-link { font-size: 9px; margin-top: 12px; }
-  .credits-box { padding-top: 58px; }
-  .credits-box h2 { font-size: 24px; }
-}
+
 
 .menu-box,
 #messagePanel {
@@ -872,10 +826,6 @@ button:active { transform: translateY(1px); }
   filter: drop-shadow(0 0 5px rgba(255,255,255,0.45));
 }
 
-#progressFill {
-  filter: none !important;
-  box-shadow: none !important;
-}
 
 .credits-link {
   margin-top: 38px;
@@ -938,14 +888,7 @@ button:active { transform: translateY(1px); }
   font-size: 12px;
 }
 
-@media (max-width: 0px) {
-  .credits-link { margin-top: 22px; font-size: 9px; }
-  .credits-box { padding: 38px 44px 40px; }
-  .credits-box h2 { font-size: 24px; margin-bottom: 18px; }
-  .credits-content { font-size: 8px; line-height: 1.45; }
-  .credits-content p { margin-bottom: 7px; }
-  .credits-return-btn { width: 145px; height: 70px; font-size: 9px; }
-}
+
 
 .credits-box {
   padding: 54px 92px 54px;
@@ -984,13 +927,7 @@ button:active { transform: translateY(1px); }
   font-size: 13px;
 }
 
-@media (max-width: 0px) {
-  .credits-box { padding: 36px 44px 38px; }
-  .credits-box h2 { font-size: 30px; margin-bottom: 18px; }
-  .credits-content { font-size: 9px; line-height: 1.45; }
-  .credits-content p { margin-bottom: 8px; }
-  .credits-return-btn { margin-top: 14px; width: 152px; height: 72px; font-size: 9px; }
-}
+
 
 #animatedBackground {
   filter: none !important;
@@ -1029,26 +966,13 @@ button:active { transform: translateY(1px); }
 }
 
 
-.score-card {
-  width: 250px !important;
-  height: 64px !important;
-}
 
-.progress-card {
-
-  width: 750px !important;
-  height: 64px !important;
-}
 
 #progressFill {
   background-size: 750px 64px !important;
 }
 
 
-#pauseBtn {
-  width: 62px !important;
-  height: 68px !important;
-}
 
 .score-label {
   left: 34px !important;
@@ -1314,21 +1238,7 @@ button:active { transform: translateY(1px); }
   margin-top: 0 !important;
 }
 
-@media (max-width: 0px) {
-  #hud {
-    top: 16px !important;
-    left: 78px !important;
-    right: 12px !important;
-    gap: 7px !important;
-  }
-  .score-card { width: 112px !important; height: 29px !important; }
-  .progress-card { width: 320px !important; height: 29px !important; }
-  .score-label, .progress-label { top: 4px !important; font-size: 6px !important; }
-  #scoreText, #ballsLeftText { top: 16px !important; font-size: 6px !important; }
-  .progress-track { left: 5px !important; right: 5px !important; top: 13px !important; height: 10px !important; }
-  .mode-icon { width: 26px !important; height: 26px !important; }
-  #pauseBtn { width: 29px !important; height: 31px !important; }
-}
+
 
 
 #hud {
@@ -1456,14 +1366,7 @@ button:active { transform: translateY(1px); }
   z-index: 8 !important;
 }
 
-@media (max-width: 0px) {
-  #hud { height: 54px !important; }
-  .score-card { left: 116px !important; top: 12px !important; width: 118px !important; height: 34px !important; }
-  .progress-card { left: 244px !important; top: 12px !important; width: 340px !important; height: 34px !important; }
-  .mode-icon { left: 594px !important; top: 12px !important; width: 32px !important; height: 32px !important; }
-  #pauseBtn { right: 12px !important; top: 12px !important; width: 34px !important; height: 38px !important; }
-  .score-label, .progress-label, #scoreText, #ballsLeftText { font-size: 6px !important; }
-}
+
 
 #transitionOverlay {
   position: fixed;
@@ -1507,9 +1410,7 @@ button:active { transform: translateY(1px); }
   opacity: 1 !important;
 }
 
-@media (max-width: 0px) {
-  .mode-icon.infinite-mode-icon { left: 244px !important; }
-}
+
 
 #hud.hidden,
 body.menu-active #hud {
@@ -1749,14 +1650,7 @@ body.menu-active #animatedBackground {
   margin: 4px auto 0;
 }
 
-@media (max-width: 0px) {
-  .settings-box { padding-top: 48px; }
-  .volume-area { width: 90%; }
-  .volume-row { height: 70px; margin-bottom: 4px; }
-  .volume-slider { height: 58px; }
-  .volume-labels { top: 10px; left: 24px; right: 24px; font-size: 8px; }
-  .volume-knob { width: 26px; height: 42px; }
-}
+
 
 
 /* v51 quick layout fix */
@@ -1895,25 +1789,7 @@ body.menu-active #animatedBackground {
   margin-top: 6px !important;
 }
 
-@media (max-width: 0px) {
-  #messagePanel .message-buttons {
-    grid-template-columns: 132px 132px 132px !important;
-    grid-auto-rows: 64px !important;
-    column-gap: 8px !important;
-  }
 
-  #messagePanel .message-buttons button,
-  #messagePanel #settingsPauseBtn {
-    width: 132px !important;
-    height: 64px !important;
-    font-size: 8px !important;
-  }
-
-  #messagePanel #menuBtn {
-    width: 160px !important;
-    height: 74px !important;
-  }
-}
 
 
 /* v52 fixes */
@@ -1967,32 +1843,7 @@ body.menu-active #animatedBackground {
   background-repeat: no-repeat !important;
 }
 
-@media (max-width: 0px) {
-  .menu-settings-btn {
-    width: 156px !important;
-    height: 72px !important;
-    font-size: 8px !important;
-  }
 
-  #messagePanel .message-buttons {
-    grid-template-columns: 142px 142px 142px !important;
-    grid-auto-rows: 66px !important;
-    column-gap: 8px !important;
-  }
-
-  #messagePanel .message-buttons button,
-  #messagePanel #settingsPauseBtn {
-    width: 142px !important;
-    height: 66px !important;
-    font-size: 8px !important;
-  }
-
-  #messagePanel #menuBtn {
-    width: 136px !important;
-    height: 62px !important;
-    font-size: 8px !important;
-  }
-}
 
 
 .volume-knob {
@@ -2040,34 +1891,7 @@ body.menu-active #animatedBackground {
   font-size: 10px !important;
 }
 
-@media (max-width: 0px) {
-  .volume-knob {
-    width: 30px !important;
-  }
 
-  .menu-settings-btn {
-    width: 146px !important;
-    height: 68px !important;
-    font-size: 8px !important;
-  }
-
-  #messagePanel .message-buttons {
-    grid-template-columns: 148px 148px 148px !important;
-    grid-auto-rows: 68px !important;
-  }
-
-  #messagePanel .message-buttons button,
-  #messagePanel #settingsPauseBtn {
-    width: 148px !important;
-    height: 68px !important;
-    font-size: 8px !important;
-  }
-
-  #messagePanel #menuBtn {
-    width: 128px !important;
-    height: 58px !important;
-  }
-}
 
 #skillLayer {
   position: absolute;
@@ -2159,15 +1983,7 @@ body.menu-active #animatedBackground {
   font-size: 20px !important;
 }
 
-@media (max-width: 0px) {
-  .menu-buttons button, .level-buttons button,
-  #messagePanel .message-buttons button,
-  #messagePanel #settingsPauseBtn {
-    font-size: 18px !important;
-  }
-  .menu-settings-btn { font-size: 12px !important; }
-  #messagePanel #menuBtn { font-size: 13px !important; }
-}
+
 
 
 /* v66 button text tune */
@@ -2212,20 +2028,9 @@ body.menu-active #animatedBackground {
   font-size: 18px !important;
 }
 
-@media (max-width: 0px) {
-  .menu-buttons button, .level-buttons button,
-  #messagePanel .message-buttons button,
-  #messagePanel #settingsPauseBtn {
-    font-size: 16px !important;
-  }
-  #infiniteModeBtn { font-size: 15px !important; }
-  .menu-settings-btn, #settingsOpenBtn { font-size: 14px !important; }
-  #backToMenuBtn, #settingsReturnBtn, .settings-return-btn, .credits-return-btn { font-size: 15px !important; }
-  #messagePanel #menuBtn { font-size: 12px !important; }
-}
 
 
-#hud { z-index: 12 !important; }
+
 #pauseBtn { z-index: 13 !important; }
 
 .menu-buttons button, .level-buttons button, .secondary-btn,
@@ -2247,13 +2052,6 @@ body.menu-active #animatedBackground {
 #hud { z-index: 12 !important; }
 #pauseBtn, #modeIcon { z-index: 13 !important; }
 
-.menu-buttons button, .level-buttons button, .secondary-btn,
-#resumeBtn, #retryBtn, #nextLevelBtn, #menuBtn,
-.menu-settings-btn, #settingsPauseBtn,
-#settingsReturnBtn, #creditsReturnBtn, #creditsOpenBtn,
-.settings-return-btn, .credits-return-btn {
-  color: #ffdfa3 !important;
-}
 
 #messagePanel.game-over-panel #retryBtn,
 #messagePanel.game-over-panel #menuBtn {
@@ -2603,6 +2401,14 @@ body.portrait-locked .orientation-lock {
   display: flex;
 }
 
+/* Show the rotation prompt on portrait phones even while game assets load. */
+@media (orientation: portrait) and (max-width: 820px),
+       (orientation: portrait) and (hover: none) {
+  .orientation-lock {
+    display: flex;
+  }
+}
+
 @media (pointer: coarse) {
   button,
   .volume-slider,
@@ -2613,4 +2419,87 @@ body.portrait-locked .orientation-lock {
   #gameCanvas {
     cursor: default !important;
   }
+}
+
+
+/* On small screens, shrink the intact desktop playfield rather than reflowing it.
+   Black letterboxing is supplied by the page background. */
+body.fixed-game-layout {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body.fixed-game-layout #gameShell {
+  width: 1280px;
+  height: 720px;
+}
+
+body.fixed-game-layout .menu-box,
+body.fixed-game-layout #messagePanel {
+  width: 832px;
+}
+
+body.fixed-game-layout .menu-box h1 {
+  font-size: 84px;
+}
+
+body.fixed-game-layout .start-title {
+  font-size: 104px;
+}
+
+body.fixed-game-layout .start-continue {
+  font-size: 15.36px;
+}
+
+body.fixed-game-layout .start-screen,
+body.fixed-game-layout #transitionOverlay,
+body.fixed-game-layout #gameOverOverlay {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+body.fixed-game-layout .score-card {
+  left: 245.44px !important;
+  top: 19.44px !important;
+  width: 186.88px !important;
+  height: 50.4px !important;
+}
+
+body.fixed-game-layout .progress-card {
+  left: 447.68px !important;
+  top: 19.44px !important;
+  width: 535.04px !important;
+  height: 50.4px !important;
+}
+
+body.fixed-game-layout .score-label,
+body.fixed-game-layout .progress-label,
+body.fixed-game-layout #scoreText,
+body.fixed-game-layout #ballsLeftText {
+  font-size: 10.496px !important;
+}
+
+body.fixed-game-layout .mode-icon {
+  left: 996.72px !important;
+  top: 18px !important;
+  width: 43.52px !important;
+  height: 43.52px !important;
+}
+
+body.fixed-game-layout .mode-icon.infinite-mode-icon {
+  left: 446.32px !important;
+}
+
+body.fixed-game-layout #pauseBtn {
+  top: 18px !important;
+  width: 48.64px !important;
+  height: 55.04px !important;
+}
+
+body.fixed-game-layout #messagePanel.game-over-panel h1 {
+  font-size: 58.88px !important;
+}
+
+body.fixed-game-layout #messagePanel.game-over-panel p {
+  font-size: 18.56px !important;
 }

@@ -227,7 +227,6 @@ let electricConnectImage = null;
 let electricStartPointImage = null;
 let electricLinkEls = [];
 let electricStartEl = null;
-let startGateImage = null;
 let sounds = { shoot: null, destroy: null, hurt: null, freeze: null, explosiveSkill: null, electricSkillExplode: null, electricConnect: null, click: null, music: null, music2: null, music3: null, music4: null, music5: null };
 let musicVolume = 1;
 let sfxVolume = 1;
@@ -241,7 +240,6 @@ let nextColor = 0;
 let loadedSkillShot = null;
 let skillStates = {};
 let skillHover = { type: null, time: 0 };
-let skillPointerDown = null;
 let score = 0;
 let paused = true;
 let gameEnded = false;
@@ -397,9 +395,15 @@ async function preloadResource(src) {
     if (typeof image.decode === "function") {
       try { await image.decode(); }
       catch (error) {
+        // decode() may fail after load/error has already fired.
         await new Promise((resolve, reject) => {
+          if (image.complete) {
+            if (image.naturalWidth > 0) resolve();
+            else reject(new Error(`Image failed: ${src}`, { cause: error }));
+            return;
+          }
           image.onload = resolve;
-          image.onerror = reject;
+          image.onerror = () => reject(new Error(`Image failed: ${src}`, { cause: error }));
         });
       }
     } else {
@@ -483,7 +487,6 @@ async function loadAssets() {
   fireAimImage = await loadImage(FIRE_AIM_SRC);
   electricConnectImage = await loadImage(ELECTRIC_CONNECT_SRC);
   electricStartPointImage = await loadImage(ELECTRIC_START_POINT_SRC);
-  startGateImage = null;
   startGateStaticSource = await loadImage("assets/sprites/start_gate.gif");
 
   marbleImages = [];
@@ -747,12 +750,35 @@ function updateVolumeSliderUI(kind) {
   } else if (fill) {
     fill.style.clipPath = `inset(0 ${100 - volume * 100}% 0 0)`;
   }
-  if (text) text.textContent = `${Math.round(volume * 100)}`;
+  const percentage = Math.round(volume * 100);
+  if (text) text.textContent = `${percentage}`;
+  if (knob) knob.setAttribute("aria-valuenow", String(percentage));
 }
 
 function setupVolumeSlider(kind, slider, knob) {
   if (!slider) return;
   let dragging = false;
+
+  if (knob) {
+    knob.setAttribute("role", "slider");
+    knob.setAttribute("aria-valuemin", "0");
+    knob.setAttribute("aria-valuemax", "100");
+    knob.addEventListener("keydown", (event) => {
+      const current = kind === "music" ? musicVolume : sfxVolume;
+      let value;
+      switch (event.key) {
+        case "ArrowLeft":
+        case "ArrowDown": value = current - 0.05; break;
+        case "ArrowRight":
+        case "ArrowUp": value = current + 0.05; break;
+        case "Home": value = 0; break;
+        case "End": value = 1; break;
+        default: return;
+      }
+      event.preventDefault();
+      setVolume(kind, value);
+    });
+  }
 
   function apply(event) {
     const rect = slider.getBoundingClientRect();
@@ -1106,7 +1132,6 @@ function startNextLevel() {
 }
 
 
-
 function updateHud() {
   scoreText.textContent = score.toString();
 
@@ -1122,6 +1147,11 @@ function updateHud() {
   const percent = Math.max(0, Math.min(100, (left / total) * 100));
   progressFill.style.width = "100%";
   progressFill.style.clipPath = `inset(0 ${100 - percent}% 0 0)`;
+}
+
+function getCanvasLayoutRect() {
+  // A transformed gameShell changes bounding boxes, but not child CSS coordinates.
+  return { width: canvas.clientWidth, height: canvas.clientHeight };
 }
 
 function getMousePosition(event) {
@@ -1554,7 +1584,7 @@ function createSkillExplosion(x, y, type) {
 }
 
 function createExplosion(x, y, src = EXPLOSION_SRC, scale = 1) {
-  const rect = canvas.getBoundingClientRect();
+  const rect = getCanvasLayoutRect();
   const size = ((EXPLOSION_SIZE * scale) / GAME_WIDTH) * rect.width;
   const screenX = (x / GAME_WIDTH) * rect.width;
   const screenY = (y / GAME_HEIGHT) * rect.height;
@@ -1570,7 +1600,6 @@ function createExplosion(x, y, src = EXPLOSION_SRC, scale = 1) {
   explosionLayer.appendChild(img);
   window.setTimeout(() => img.remove(), EXPLOSION_DURATION);
 }
-
 
 
 function triggerElectricSkill(hitIndex, x, y) {
@@ -1709,7 +1738,7 @@ function updateElectricLinkDom() {
     return;
   }
 
-  const rect = canvas.getBoundingClientRect();
+  const rect = getCanvasLayoutRect();
   const sx = rect.width / GAME_WIDTH;
   const sy = rect.height / GAME_HEIGHT;
 
@@ -2082,41 +2111,6 @@ function draw() {
   drawSkills();
 }
 
-function drawBackgroundOverlay() {
-  const gradient = ctx.createRadialGradient(GAME_WIDTH / 2, GAME_HEIGHT / 2, 60, GAME_WIDTH / 2, GAME_HEIGHT / 2, GAME_WIDTH / 1.2);
-  gradient.addColorStop(0, "rgba(0, 118, 156, 0.08)");
-  gradient.addColorStop(1, "rgba(0, 0, 0, 0.34)");
-  ctx.fillStyle = gradient;
-  ctx.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
-
-  ctx.fillStyle = "rgba(0, 4, 16, 0.16)";
-  ctx.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
-}
-
-function drawGridOverlay() {
-  ctx.save();
-  ctx.globalAlpha = 0.22;
-  ctx.strokeStyle = "rgba(88, 228, 255, 0.45)";
-  ctx.lineWidth = 1;
-
-  for (let x = 0; x <= GAME_WIDTH; x += 64) {
-    ctx.beginPath();
-    ctx.moveTo(x, 0);
-    ctx.lineTo(x, GAME_HEIGHT);
-    ctx.stroke();
-  }
-
-  for (let y = 0; y <= GAME_HEIGHT; y += 64) {
-    ctx.beginPath();
-    ctx.moveTo(0, y);
-    ctx.lineTo(GAME_WIDTH, y);
-    ctx.stroke();
-  }
-
-  ctx.restore();
-}
-
-
 
 function drawTrack() {
   ctx.save();
@@ -2204,30 +2198,6 @@ function drawStaticStartGateFrame() {
   }
 }
 
-
-function drawPortalImage(image, x, y, size, angle, drawFallbackRing) {
-  ctx.save();
-  ctx.translate(x, y);
-  ctx.rotate(angle);
-
-  if (image) {
-    ctx.shadowColor = "rgba(0, 0, 0, 0.78)";
-    ctx.shadowBlur = 10;
-    ctx.drawImage(image, -size / 2, -size / 2, size, size);
-  } else {
-    ctx.strokeStyle = drawFallbackRing ? "rgba(90, 240, 255, 0.95)" : "rgba(0, 140, 255, 0.9)";
-    ctx.fillStyle = "rgba(0, 14, 32, 0.9)";
-    ctx.shadowColor = "rgba(68, 232, 255, 0.95)";
-    ctx.shadowBlur = 22;
-    ctx.lineWidth = 5;
-    ctx.beginPath();
-    ctx.arc(0, 0, size * 0.32, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.stroke();
-  }
-
-  ctx.restore();
-}
 
 function getBallPoint(ball) {
   const visualDistance = typeof ball.visualDistance === "number" ? ball.visualDistance : ball.distance;
@@ -2327,7 +2297,7 @@ function updateCharacterSpritePosition() {
   }
 
   characterSprite.classList.remove("hidden");
-  const rect = canvas.getBoundingClientRect();
+  const rect = getCanvasLayoutRect();
   const x = (shooter.x / GAME_WIDTH) * rect.width;
   const y = ((shooter.y + CHARACTER_OFFSET_Y) / GAME_HEIGHT) * rect.height;
   const width = (CHARACTER_SIZE / GAME_WIDTH) * rect.width;
@@ -2539,7 +2509,7 @@ function getSkillAtPoint(x, y) {
 }
 
 function updateSkillDom(show = true) {
-  const rect = canvas.getBoundingClientRect();
+  const rect = getCanvasLayoutRect();
   const sx = rect.width / GAME_WIDTH;
   const sy = rect.height / GAME_HEIGHT;
 
@@ -2609,39 +2579,11 @@ function showSkillTooltip(type, rect) {
   skillTooltipEl.classList.remove("hidden");
 }
 
-function wrapCanvasTextCentered(renderCtx, text, x, y, maxWidth, lineHeight) {
-  const words = text.split(" ");
-  let line = "";
-  for (const word of words) {
-    const test = line ? `${line} ${word}` : word;
-    if (renderCtx.measureText(test).width > maxWidth && line) {
-      renderCtx.fillText(line, x, y);
-      line = word;
-      y += lineHeight;
-    } else line = test;
-  }
-  if (line) renderCtx.fillText(line, x, y);
-}
-
-function wrapCanvasText(renderCtx, text, x, y, maxWidth, lineHeight) {
-  const words = text.split(" ");
-  let line = "";
-  for (const word of words) {
-    const test = line ? `${line} ${word}` : word;
-    if (renderCtx.measureText(test).width > maxWidth && line) {
-      renderCtx.fillText(line, x, y);
-      line = word;
-      y += lineHeight;
-    } else line = test;
-  }
-  if (line) renderCtx.fillText(line, x, y);
-}
-
 function updateSkillCancelTip() {
   if (!skillCancelTip) return;
   if (loadedSkillShot) {
     const slot = getSkillSlots().find(s => s.type === loadedSkillShot);
-    const rect = canvas.getBoundingClientRect();
+    const rect = getCanvasLayoutRect();
     const sx = rect.width / GAME_WIDTH;
     const sy = rect.height / GAME_HEIGHT;
     if (slot) {
@@ -2889,12 +2831,30 @@ function fitGameToViewport() {
   const viewportWidth = Math.max(1, viewport ? viewport.width : window.innerWidth);
   const viewportHeight = Math.max(1, viewport ? viewport.height : window.innerHeight);
   const scale = Math.min(viewportWidth / GAME_WIDTH, viewportHeight / GAME_HEIGHT);
-  gameShell.style.width = `${Math.max(1, GAME_WIDTH * scale)}px`;
-  gameShell.style.height = `${Math.max(1, GAME_HEIGHT * scale)}px`;
+  const useFixedLayout = isTouchDevice() || scale < 1;
+
+  document.body.classList.toggle("fixed-game-layout", useFixedLayout);
+  if (useFixedLayout) {
+    // Keep every menu and HUD element at its desktop coordinates.
+    // Only the finished 1280x720 playfield is scaled to fit the device.
+    gameShell.style.width = `${GAME_WIDTH}px`;
+    gameShell.style.height = `${GAME_HEIGHT}px`;
+    gameShell.style.transform = `translate(-50%, -50%) scale(${scale})`;
+  } else {
+    // Preserve the existing layout on desktop-sized viewports.
+    gameShell.style.width = `${GAME_WIDTH * scale}px`;
+    gameShell.style.height = `${GAME_HEIGHT * scale}px`;
+    gameShell.style.transform = "translate(-50%, -50%)";
+  }
+
+  // Center in Safari's visible area if its toolbar changes the viewport height.
+  gameShell.style.left = `${(viewport ? viewport.offsetLeft : 0) + viewportWidth / 2}px`;
+  gameShell.style.top = `${(viewport ? viewport.offsetTop : 0) + viewportHeight / 2}px`;
 }
 
 function updateOrientationLock() {
-  const locked = isTouchDevice() && window.matchMedia("(orientation: portrait)").matches;
+  const mobileViewport = isTouchDevice() || window.matchMedia("(max-width: 820px)").matches;
+  const locked = mobileViewport && window.matchMedia("(orientation: portrait)").matches;
   document.body.classList.toggle("portrait-locked", locked);
   if (orientationLock) orientationLock.setAttribute("aria-hidden", locked ? "false" : "true");
 
